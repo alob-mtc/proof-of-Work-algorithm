@@ -14,10 +14,12 @@ func main() {
 	prefix := []byte("Bola is a boy")
 	var str []byte
 	hashes := 0
+	random := make([]byte, 20)
+	random = append(prefix, random...)
 	for {
 		hashes++
-		seed, str = RandomString(20, seed)
-		if Hash(append(prefix, str...), 3) {
+		seed, str = RandomString(random, len(prefix), seed)
+		if Hash(random, 3) {
 			fmt.Println(string(str))
 			break
 		}
@@ -38,9 +40,8 @@ func RandomNumber(seed uint64) uint64 {
 }
 
 // RandomString x
-func RandomString(len int, seed uint64) (uint64, []byte) {
-	str := make([]byte, len)
-	for i := 0; i < len; i++ {
+func RandomString(str []byte, offset int, seed uint64) (uint64, []byte) {
+	for i := offset; i < len(str); i++ {
 		seed = RandomNumber(seed)
 		str[i] = characterSet[seed%62]
 	}
