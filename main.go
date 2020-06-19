@@ -32,17 +32,17 @@ func main() {
 // RandomNumber f
 func RandomNumber(seed uint64) uint64 {
 	seed ^= seed << 21
-	seed ^= seed >> 31 
+	seed ^= seed >> 31
 	seed ^= seed << 4
 	return seed
 }
 
 // RandomString x
 func RandomString(len int, seed uint64) (uint64, []byte) {
-	str := []byte{}
+	str := make([]byte, len)
 	for i := 0; i < len; i++ {
 		seed = RandomNumber(seed)
-		str = append(str, characterSet[seed%62])
+		str[i] = characterSet[seed%62]
 	}
 	return seed, str
 }
